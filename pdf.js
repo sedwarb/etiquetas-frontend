@@ -46,5 +46,8 @@ const generar_pdf = (respuesta)=>{
     doc.save('productos_imprimir.pdf')
 }
 /* funcion ejecutada por boton FIN*/
+module.exports = {
+    generar_pdf
+}
 
 /* Generar PDF FIN*/

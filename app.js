@@ -8,18 +8,18 @@ const {
 
 const app = express()
 
-app.listen(3000,()=>console.log("Escuchando en el puerto 3000"))
+app.listen(3000,()=>console.log("Escuchando en: http://127.0.0.1:3000/"))
 
 app.use(express.json())
 app.use(cors())
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-    next();
-});
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Credentials', 'true')
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE')
+    next()
+})
 
 app.get('/',cors(), (req,res)=>{
     let mysql = require("mysql")
@@ -61,8 +61,6 @@ app.get('/',cors(), (req,res)=>{
             tbody = `<tbody id="tbody-productos">${tr}</tbody>`
             
             /* Consultar Productos FIN*/
-            //res.send(respuesta)
-             
             res.send(
                 `
                 <!DOCTYPE html>
@@ -128,8 +126,7 @@ app.get('/',cors(), (req,res)=>{
                             })
                             .then(response => response.json())
                             .then(data => location.href = 'http://127.0.0.1:3000/exitoso')
-                            .catch(error => console.log(error))
-                            /*.catch(error => location.href = 'http://127.0.0.1:3000/error')*/
+                            .catch(error => location.href = 'http://127.0.0.1:3000/error')
                         })
                     </script>
                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
@@ -146,7 +143,7 @@ app.get('/',cors(), (req,res)=>{
 
 app.get('/exitoso',cors(),
 function(req, res){
-    res.sendFile(__dirname + "/vistas/exitoso.html")
+    res.sendFile(__dirname + "/productos_imprimir.pdf")
 })
 
 app.get('/error',cors(),

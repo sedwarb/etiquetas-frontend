@@ -1,5 +1,10 @@
 const express = require('express')
 const cors = require('cors')
+require('dotenv').config()
+
+const {
+    DB_USER, DB_PASSWORD, DB_HOST,DB_NAME
+  } = process.env;
 
 const app = express()
 
@@ -20,10 +25,10 @@ app.get('/',cors(), (req,res)=>{
     let mysql = require("mysql")
 
     let conexion = mysql.createConnection({
-        host: "localhost",
-        database: "base_isla",
-        user: "root",
-        password: "Root.123"
+        host: DB_HOST,
+        database: DB_NAME,
+        user: DB_USER,
+        password:DB_PASSWORD
     })
 
     conexion.connect((error)=>{

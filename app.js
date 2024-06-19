@@ -116,6 +116,7 @@ app.get('/',cors(), (req,res)=>{
                                     }
                                 }
                                 info.push({nombre:reg[2],precio:reg[3]})
+                                console.log(info)
                             })
                             fetch('http://127.0.0.1:3000/envio', {
                                 method: 'POST',
@@ -143,7 +144,7 @@ app.get('/',cors(), (req,res)=>{
 
 app.get('/exitoso',cors(),
 function(req, res){
-    res.sendFile(__dirname + "/productos_imprimir.pdf")
+    res.sendFile(__dirname + "/vistas/exitoso.html")
 })
 
 app.get('/error',cors(),
@@ -153,6 +154,7 @@ function(req, res){
 
 app.post('/envio',cors(),
 function(req, res){
+    
     const { generar_pdf } = require("./pdf")
     generar_pdf(req.body)
     res.send({"msg":"Bien"})

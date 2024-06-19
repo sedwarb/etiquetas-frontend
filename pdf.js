@@ -1,5 +1,5 @@
 /* Generar PDF INI*/
-    
+const fs = require('fs')
 const { jsPDF } = require("jspdf")
 const { imglogoAUX } = require("./img-logo")
 var opciones = {
@@ -7,6 +7,12 @@ var opciones = {
     unit: 'mm',
     format: [80, 40]
 }
+try {
+    fs.unlinkSync('./imprimir/imprimir.pdf')
+} catch (err) {
+    console.error('Ocurrió un error al eliminar el archivo:', err);
+}
+
 var doc = new jsPDF(opciones)
 const capitalizarFirst = (texto) => texto.charAt(0).toUpperCase() + texto.substring(1)
 const capitalizarAll = (texto) => {
@@ -18,7 +24,8 @@ const capitalizarAll = (texto) => {
 /* funcion ejecutada por boton INI*/
 const generar_pdf = (respuesta)=>{
     for (let j = 0; j < respuesta.length; j++) {                
-        if(j>0)doc.addPage(opciones)
+        //if(j>0)doc.addPage(opciones)
+        
         doc.setFontSize(20);
         let tamanio = capitalizarAll(respuesta[j].nombre)
         if(tamanio.length<17){
@@ -41,9 +48,13 @@ const generar_pdf = (respuesta)=>{
                 }).format(respuesta[j].precio)
         )
         doc.addImage(imglogoAUX, 'JPEG', 70, 22, 9, 11)
+        doc.addPage(opciones)
     }
-    doc.autoPrint({ variant: 'non-conform' })
-    doc.save('productos_imprimir.pdf')
+    let pageCount = doc.internal.getNumberOfPages()
+    doc.deletePage(pageCount)
+    //doc.autoPrint({ variant: 'non-conform' })
+
+    doc.save(`./imprimir/imprimir.pdf`)
 }
 /* funcion ejecutada por boton FIN*/
 module.exports = {

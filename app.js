@@ -159,4 +159,74 @@ function(req, res){
     generar_pdf(req.body)
     res.send({"msg":"Bien"})
 })
+
+app.get('/por_nombre/:nombre',cors(), (req,res)=>{
+    let mysql = require("mysql")
+
+    let conexion = mysql.createConnection({
+        host: DB_HOST,
+        database: DB_NAME,
+        user: DB_USER,
+        password:DB_PASSWORD
+    })
+
+    conexion.connect((error)=>{
+        if(error) throw error
+    })
+
+    //const productos = "SELECT id, codigo, nombre, valor_utilidad as precio FROM producto"
+    const productos = `
+    SELECT id, codigo, nombre, valor_utilidad as precio 
+    FROM producto
+    WHERE nombre LIKE '%${req.params.nombre}%'
+    limit 5
+    `
+
+    conexion.query(productos,(error,respuesta)=>{
+        if(error)throw error
+        else{
+            res.json(respuesta)
+        }
+    })
+    conexion.end()
+})
+
+app.get('/por_codigo/:codigo',cors(), (req,res)=>{
+    let mysql = require("mysql")
+
+    let conexion = mysql.createConnection({
+        host: DB_HOST,
+        database: DB_NAME,
+        user: DB_USER,
+        password:DB_PASSWORD
+    })
+
+    conexion.connect((error)=>{
+        if(error) throw error
+    })
+
+    let productos = ''
+
+    if(req.params.codigo==="x1980x"){
+        productos = `
+            SELECT id, codigo, nombre, valor_utilidad as precio 
+            FROM producto
+            WHERE codigo LIKE '%${req.body.codigo}%'
+            `
+    }else{
+        productos = `
+            SELECT id, codigo, nombre, valor_utilidad as precio 
+            FROM producto
+            WHERE codigo LIKE '%${req.params.codigo}%'
+            `
+    }
+
+    conexion.query(productos,(error,respuesta)=>{
+        if(error)throw error
+        else{
+            res.json(respuesta)
+        }
+    })
+    conexion.end()
+})
 //npm run start

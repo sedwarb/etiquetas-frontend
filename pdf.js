@@ -28,11 +28,11 @@ const generar_pdf = (respuesta)=>{
         
         doc.setFontSize(20);
         let tamanio = capitalizarAll(respuesta[j].nombre)
-        if(tamanio.length<17){
+        if(tamanio.length<13){
             doc.text(22, 7, tamanio)
         }else{                                        
-            let n1 = tamanio.slice(0,16), 
-                n2 = tamanio.slice(16,tamanio.length>34?34:tamanio.length)
+            let n1 = tamanio.slice(0,12), 
+                n2 = tamanio.slice(12,tamanio.length>24?24:tamanio.length)
             doc.text(22, 7, n1)
             doc.text(22, 14, n2)                    
         }

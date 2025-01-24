@@ -41,24 +41,48 @@
                     <th scope="col">Codigo</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Precio</th>
+                    <th scope="col">Agregar</th>
                 </tr>
             </thead>
             <tbody id="tbody_productos">
             </tbody>
         </table>
+        <hr>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_muestra">
+            </tbody>
+        </table>
     </div>
 </body>
 <script>
+    /* Busqueda por codigo o nombre -- INICIO */
     const input_codigo = document.getElementById('input_codigo'),
         input_nombre = document.getElementById('input_nombre'),
         btn_buscar_codigo = document.getElementById('btn_buscar'),
-        tbody = document.getElementById('tbody_productos')
+        tbody = document.getElementById('tbody_productos'),
+        tbody_2 = document.getElementById('tbody_muestra'),
+        productos_add = []
     
 
     btn_buscar_codigo.addEventListener('click', () => {
-        if(input_codigo.value){
-            const codigo = input_codigo.value
-            fetch(`http://localhost:3000/por_codigo/${codigo}`)
+        let busqueda = {tipo:"",valor:""}
+        if(input_codigo.value || input_nombre.value){
+            while (tbody.firstChild){tbody.removeChild(tbody.firstChild)}
+            if(input_codigo.value){
+                busqueda.tipo="por_codigo"
+                busqueda.valor=input_codigo.value
+            }else{
+                busqueda.tipo="por_nombre"
+                busqueda.valor=input_nombre.value
+            }
+            fetch(`http://localhost:3000/${busqueda.tipo}/${busqueda.valor}`)
                 .then(response => response.json())
                 .then(data => {
                     tbody.innerHTML = ''
@@ -68,31 +92,37 @@
                             <td>${producto.codigo}</td>
                             <td>${producto.nombre}</td>
                             <td>${producto.precio}</td>
+                            <td>
+                                <input 
+                                    type="button" 
+                                    class="btn btn-outline-success" 
+                                    value="+"
+                                    onclick="agregarProducto('${producto.codigo}','${producto.nombre}',${producto.precio})">
+                            </td>
                         `
                         tbody.appendChild(tr)
                     })
                     input_codigo.value = ''
-                })
-        }
-        if(input_nombre.value){
-            const nombre = input_nombre.value
-            fetch(`http://localhost:3000/por_nombre/${nombre}`)
-                .then(response => response.json())
-                .then(data => {
-                    tbody.innerHTML = ''
-                    data.forEach(producto => {
-                        const tr = document.createElement('tr')
-                        tr.innerHTML = `
-                            <td>${producto.codigo}</td>
-                            <td>${producto.nombre}</td>
-                            <td>${producto.precio}</td>
-                        `
-                        tbody.appendChild(tr)
-                    })
                     input_nombre.value = ''
                 })
         }
-        
     })
+    /* Busqueda por codigo o nombre -- FIN */
+
+    /* Agrega los productos que se van a imprimir --INICIO */
+    function agregarProducto(codigo,nombre,precio) {
+        productos_add.push({codigo,nombre,precio})
+        while (tbody_2.firstChild){tbody_2.removeChild(tbody_2.firstChild)}
+        productos_add.forEach(producto => {
+            const tr = document.createElement('tr')
+            tr.innerHTML = `
+                <td>${producto.codigo}</td>
+                <td>${producto.nombre}</td>
+                <td>${producto.precio}</td>
+            `
+            tbody_2.appendChild(tr)
+        })
+    }
+    /* Agrega los productos que se van a imprimir --FIN */
 </script>
 </html>

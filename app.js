@@ -154,7 +154,6 @@ function(req, res){
 
 app.post('/envio',cors(),
 function(req, res){
-    
     const { generar_pdf } = require("./pdf")
     generar_pdf(req.body)
     res.send({"msg":"Bien"})

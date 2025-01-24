@@ -24,7 +24,7 @@
                     <input type="text" class="form-control" id="input_nombre">
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-1">
                 <div class="mb-4">
                     
                 </div>
@@ -33,6 +33,26 @@
                         class="btn btn-outline-success" 
                         value="Buscar" 
                         id="btn_buscar">
+            </div>
+            <div class="col-1">
+                <div class="mb-4">
+                    
+                </div>
+                <input 
+                        type="button" 
+                        class="btn btn-outline-dark" 
+                        value="Limpiar" 
+                        id="btn_limpiar">
+            </div>
+            <div class="col-1">
+                <div class="mb-4">
+                    
+                </div>
+                <input 
+                        type="button" 
+                        class="btn btn-outline-success" 
+                        value="Enviar"
+                        id="btn_enviar">
             </div>
         </div>
         <table class="table">
@@ -68,8 +88,33 @@
         btn_buscar_codigo = document.getElementById('btn_buscar'),
         tbody = document.getElementById('tbody_productos'),
         tbody_2 = document.getElementById('tbody_muestra'),
-        productos_add = []
+        btn_limpiar = document.getElementById('btn_limpiar'),
+        btn_enviar = document.getElementById('btn_enviar')
+    let productos_add = []
     
+    btn_limpiar.addEventListener('click', () => {
+        while (tbody.firstChild){tbody.removeChild(tbody.firstChild)}
+        input_codigo.value = ''
+        input_nombre.value = ''
+    })
+
+    btn_enviar.addEventListener('click', () => {
+        fetch('http://localhost:3000/envio',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(productos_add)
+        })
+        .then(response => response.json())
+        .then(data => {
+            while (tbody.firstChild){tbody.removeChild(tbody.firstChild)}
+            while (tbody_2.firstChild){tbody_2.removeChild(tbody_2.firstChild)}
+            input_codigo.value = ''
+            input_nombre.value = ''
+            productos_add = []
+        })
+    })
 
     btn_buscar_codigo.addEventListener('click', () => {
         let busqueda = {tipo:"",valor:""}

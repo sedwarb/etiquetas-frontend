@@ -10,10 +10,8 @@
 </head>
 <body>
     <div>
-        <form action="http://localhost:3000/por_codigo/x1980x" method="get">
-            <input type="text" name="codigo" placeholder="Codigo">
-            <input type="submit" value="Buscar por codigo">
-        </form>
+        <input type="text" name="codigo" placeholder="Codigo" id="input_codigo">
+        <input type="button" value="Buscar por codigo" id="btn_buscar_codigo">
     </div>
     <table>
         <thead>
@@ -23,9 +21,30 @@
                 <th>Precio</th>
             </tr>
         </thead>
-        <tbody>
-
+        <tbody id="tbody_productos">
         </tbody>
     </table>
 </body>
+<script>
+    const input_codigo = document.getElementById('input_codigo'),
+        btn_buscar_codigo = document.getElementById('btn_buscar_codigo'),
+        tbody = document.getElementById('tbody_productos')
+
+    btn_buscar_codigo.addEventListener('click', () => {
+        const codigo = input_codigo.value
+        fetch(`http://localhost:3000/por_codigo/${codigo}`)
+            .then(response => response.json())
+            .then(data => {
+                tbody.innerHTML = ''
+                data.forEach(producto => {
+                    const tr = document.createElement('tr')
+                    tr.innerHTML = `
+                        <td>${producto.nombre}</td>
+                        <td>${producto.precio}</td>
+                    `
+                    tbody.appendChild(tr)
+                })
+            })
+    })
+</script>
 </html>

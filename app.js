@@ -229,4 +229,8 @@ app.get('/por_codigo/:codigo',cors(), (req,res)=>{
     })
     conexion.end()
 })
+
+app.get('/buscar_producto',cors(),(req,res)=>{
+    res.sendFile(__dirname + "/vistas/carga_productos.html")
+})
 //npm run start

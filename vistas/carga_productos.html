@@ -9,42 +9,90 @@
     <title>Productos</title>
 </head>
 <body>
-    <div>
-        <input type="text" name="codigo" placeholder="Codigo" id="input_codigo">
-        <input type="button" value="Buscar por codigo" id="btn_buscar_codigo">
+    <div class="container-md mt-2">
+        <div class="row">
+            <div class="col-3">
+                <div class="mb-1">
+                    <label for="input_codigo" class="form-label">Codigo del Producto</label>
+                    <input type="text" class="form-control" id="input_codigo">
+                </div>
+                
+            </div>
+            <div class="col-3">
+                <div class="mb-1">
+                    <label for="input_nombre" class="form-label">Nombre del Producto</label>
+                    <input type="text" class="form-control" id="input_nombre">
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="mb-4">
+                    
+                </div>
+                <input 
+                        type="button" 
+                        class="btn btn-outline-success" 
+                        value="Buscar" 
+                        id="btn_buscar">
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                </tr>
+            </thead>
+            <tbody id="tbody_productos">
+            </tbody>
+        </table>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Codigo</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody id="tbody_productos">
-        </tbody>
-    </table>
 </body>
 <script>
     const input_codigo = document.getElementById('input_codigo'),
-        btn_buscar_codigo = document.getElementById('btn_buscar_codigo'),
+        input_nombre = document.getElementById('input_nombre'),
+        btn_buscar_codigo = document.getElementById('btn_buscar'),
         tbody = document.getElementById('tbody_productos')
+    
 
     btn_buscar_codigo.addEventListener('click', () => {
-        const codigo = input_codigo.value
-        fetch(`http://localhost:3000/por_codigo/${codigo}`)
-            .then(response => response.json())
-            .then(data => {
-                tbody.innerHTML = ''
-                data.forEach(producto => {
-                    const tr = document.createElement('tr')
-                    tr.innerHTML = `
-                        <td>${producto.nombre}</td>
-                        <td>${producto.precio}</td>
-                    `
-                    tbody.appendChild(tr)
+        if(input_codigo.value){
+            const codigo = input_codigo.value
+            fetch(`http://localhost:3000/por_codigo/${codigo}`)
+                .then(response => response.json())
+                .then(data => {
+                    tbody.innerHTML = ''
+                    data.forEach(producto => {
+                        const tr = document.createElement('tr')
+                        tr.innerHTML = `
+                            <td>${producto.codigo}</td>
+                            <td>${producto.nombre}</td>
+                            <td>${producto.precio}</td>
+                        `
+                        tbody.appendChild(tr)
+                    })
+                    input_codigo.value = ''
                 })
-            })
+        }
+        if(input_nombre.value){
+            const nombre = input_nombre.value
+            fetch(`http://localhost:3000/por_nombre/${nombre}`)
+                .then(response => response.json())
+                .then(data => {
+                    tbody.innerHTML = ''
+                    data.forEach(producto => {
+                        const tr = document.createElement('tr')
+                        tr.innerHTML = `
+                            <td>${producto.codigo}</td>
+                            <td>${producto.nombre}</td>
+                            <td>${producto.precio}</td>
+                        `
+                        tbody.appendChild(tr)
+                    })
+                    input_nombre.value = ''
+                })
+        }
+        
     })
 </script>
 </html>

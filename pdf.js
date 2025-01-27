@@ -14,6 +14,30 @@ try {
     console.error('Ocurrió un error al eliminar el archivo:', err);
 }
 
+function separarPalabras(texto, maxCaracteresPorLinea) {
+    const palabras = texto.split(' ');
+    const lineas = [];
+    let lineaActual = '';
+  
+    palabras.forEach(palabra => {
+      if (lineaActual.length + palabra.length + 1 <= maxCaracteresPorLinea) {
+        // Si la palabra cabe en la línea actual, la agregamos
+        lineaActual += (lineaActual ? ' ' : '') + palabra;
+      } else {
+        // Si la palabra no cabe, iniciamos una nueva línea
+        lineas.push(lineaActual);
+        lineaActual = palabra;
+      }
+    });
+  
+    // Agregamos la última línea si no está vacía
+    if (lineaActual) {
+      lineas.push(lineaActual);
+    }
+  
+    return lineas;
+  }
+
 var doc = new jsPDF(opciones)
 const capitalizarFirst = (texto) => texto.charAt(0).toUpperCase() + texto.substring(1)
 const capitalizarAll = (texto) => {
@@ -29,7 +53,7 @@ const generar_pdf = (respuesta)=>{
     //const posicion = 22 (2)
     const posicion = 1,
     //texto1 = 17, texto2 = 14, numero = 31 (1)
-    texto1 = 14, texto2 = 20, numero = 35
+    texto1 = 14, texto2 = 20, texto3 = 26, numero = 35
     for (let j = 0; j < respuesta.length; j++) {                
         //if(j>0)doc.addPage(opciones)
         
@@ -37,11 +61,20 @@ const generar_pdf = (respuesta)=>{
         let tamanio = capitalizarAll(respuesta[j].nombre)
         if(tamanio.length<13){
             doc.text(posicion, 7, tamanio)
-        }else{                                        
-            let n1 = tamanio.slice(0,11), 
-                n2 = tamanio.slice(11,tamanio.length>24?24:tamanio.length)
+        }else{
+            //const texto = 'LA JOYA CON BICARBONATO X500ML';
+            const maxCaracteres = 11;
+            const lineasSeparadas = separarPalabras(tamanio, maxCaracteres);  
+
+            /* let n1 = tamanio.slice(0,11), 
+                n2 = tamanio.slice(11,tamanio.length>24?24:tamanio.length) */
+            let n1 = lineasSeparadas[0],
+                n2 = lineasSeparadas[1],
+                n3 = lineasSeparadas[2]
+
             doc.text(posicion, texto1, n1)
-            doc.text(posicion, texto2, n2)                    
+            doc.text(posicion, texto2, n2)
+            doc.text(posicion, texto3, n3)                     
         }
         doc.setFontSize(30)
         

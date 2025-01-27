@@ -232,4 +232,37 @@ app.get('/por_codigo/:codigo',cors(), (req,res)=>{
 app.get('/',cors(),(req,res)=>{
     res.sendFile(__dirname + "/vistas/carga_productos.html")
 })
+
+app.get('/palabras',(req,res)=>{
+
+    function separarPalabras(texto, maxCaracteresPorLinea) {
+        const palabras = texto.split(' ');
+        const lineas = [];
+        let lineaActual = '';
+      
+        palabras.forEach(palabra => {
+          if (lineaActual.length + palabra.length + 1 <= maxCaracteresPorLinea) {
+            // Si la palabra cabe en la línea actual, la agregamos
+            lineaActual += (lineaActual ? ' ' : '') + palabra;
+          } else {
+            // Si la palabra no cabe, iniciamos una nueva línea
+            lineas.push(lineaActual);
+            lineaActual = palabra;
+          }
+        });
+      
+        // Agregamos la última línea si no está vacía
+        if (lineaActual) {
+          lineas.push(lineaActual);
+        }
+      
+        return lineas;
+      }
+      
+      const texto = 'LA JOYA CON BICARBONATO X500ML';
+      const maxCaracteres = 11;
+      const lineasSeparadas = separarPalabras(texto, maxCaracteres);
+      
+      console.log(lineasSeparadas); // Imprime: ['LA JOYA', 'CON', 'BICARBONATO', 'X500ML']
+})
 //npm run start

@@ -8,11 +8,11 @@ var opciones = {
     unit: 'mm',
     format: [80, 40]
 }
-try {
+/* try {
     fs.unlinkSync('./imprimir/imprimir.pdf')
 } catch (err) {
     console.error('Ocurrió un error al eliminar el archivo:', err);
-}
+} */
 
 function separarPalabras(texto, maxCaracteresPorLinea) {
     const palabras = texto.split(' ');
@@ -93,8 +93,10 @@ const generar_pdf = (respuesta)=>{
     let pageCount = doc.internal.getNumberOfPages()
     doc.deletePage(pageCount)
     //doc.autoPrint({ variant: 'non-conform' })
+    let fecha = new Date()
+    fecha = `${fecha.getDate()}${fecha.getMonth()+1}${fecha.getFullYear()}_${fecha.getHours()}${fecha.getMinutes()}`
+    doc.save(`./imprimir/imprimir_${fecha}.pdf`)
 
-    doc.save(`./imprimir/imprimir.pdf`)
 }
 /* funcion ejecutada por boton FIN*/
 module.exports = {

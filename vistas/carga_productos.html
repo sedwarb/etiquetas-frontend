@@ -55,30 +55,42 @@
                         id="btn_enviar">
             </div>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Codigo</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Agregar</th>
-                </tr>
-            </thead>
-            <tbody id="tbody_productos">
-            </tbody>
-        </table>
         <hr>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Codigo</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Precio</th>
-                </tr>
-            </thead>
-            <tbody id="tbody_muestra">
-            </tbody>
-        </table>
+        <div class="row">
+            <div class="col-6">
+                <div class="alert alert-success" role="alert">
+                    Busqueda de Productos
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Codigo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Agregar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_productos">
+                    </tbody>
+                </table>                
+            </div>
+            <div class="col-6">
+                <div class="alert alert-info" role="alert">
+                    Lista para Imprimir
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Codigo</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_muestra">
+                    </tbody>
+                </table>                
+            </div>
+        </div>
     </div>
 </body>
 <script>

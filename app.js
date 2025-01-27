@@ -21,7 +21,7 @@ app.use((req, res, next) => {
     next()
 })
 
-app.get('/',cors(), (req,res)=>{
+app.get('/furea_servicio',cors(), (req,res)=>{
     let mysql = require("mysql")
 
     let conexion = mysql.createConnection({
@@ -229,7 +229,7 @@ app.get('/por_codigo/:codigo',cors(), (req,res)=>{
     conexion.end()
 })
 
-app.get('/buscar_producto',cors(),(req,res)=>{
+app.get('/',cors(),(req,res)=>{
     res.sendFile(__dirname + "/vistas/carga_productos.html")
 })
 //npm run start

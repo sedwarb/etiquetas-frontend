@@ -1,0 +1,7 @@
+Se probo imprimiendo y con el formato original daba problemas
+
+Quedo con los ajustes que voy a indicar en el commit: VERSION BUENA
+
+se debe visualizar con el navegador mozilla Firefox
+
+y al imprimir colocar en preferencias orientacion vertical

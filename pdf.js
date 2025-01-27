@@ -4,6 +4,7 @@ const { jsPDF } = require("jspdf")
 const { imglogoAUX } = require("./img-logo")
 var opciones = {
     orientation: 'l',
+    //orientation: 'p',
     unit: 'mm',
     format: [80, 40]
 }
@@ -23,22 +24,28 @@ const capitalizarAll = (texto) => {
 
 /* funcion ejecutada por boton INI*/
 const generar_pdf = (respuesta)=>{
+    //inpresion vertical solo
+    //const posicion = 22 (1)
+    //const posicion = 22 (2)
+    const posicion = 1,
+    //texto1 = 17, texto2 = 14, numero = 31 (1)
+    texto1 = 14, texto2 = 20, numero = 35
     for (let j = 0; j < respuesta.length; j++) {                
         //if(j>0)doc.addPage(opciones)
         
-        doc.setFontSize(20);
+        doc.setFontSize(15);
         let tamanio = capitalizarAll(respuesta[j].nombre)
         if(tamanio.length<13){
-            doc.text(22, 7, tamanio)
+            doc.text(posicion, 7, tamanio)
         }else{                                        
-            let n1 = tamanio.slice(0,12), 
-                n2 = tamanio.slice(12,tamanio.length>24?24:tamanio.length)
-            doc.text(22, 7, n1)
-            doc.text(22, 14, n2)                    
+            let n1 = tamanio.slice(0,11), 
+                n2 = tamanio.slice(11,tamanio.length>24?24:tamanio.length)
+            doc.text(posicion, texto1, n1)
+            doc.text(posicion, texto2, n2)                    
         }
         doc.setFontSize(30)
         
-        doc.text(22, 31, 
+        doc.text(posicion, numero, 
             new Intl.NumberFormat(
                 'es-CO', 
                 { 
@@ -47,7 +54,7 @@ const generar_pdf = (respuesta)=>{
                     minimumFractionDigits: 0 
                 }).format(respuesta[j].precio)
         )
-        doc.addImage(imglogoAUX, 'JPEG', 70, 22, 9, 11)
+        //doc.addImage(imglogoAUX, 'JPEG', 70, 22, 9, 11)
         doc.addPage(opciones)
     }
     let pageCount = doc.internal.getNumberOfPages()

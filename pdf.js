@@ -95,7 +95,7 @@ const generar_pdf = (respuesta)=>{
     //doc.autoPrint({ variant: 'non-conform' })
     let fecha = new Date()
     fecha = `${fecha.getDate()}${fecha.getMonth()+1}${fecha.getFullYear()}_${fecha.getHours()}${fecha.getMinutes()}`
-    doc.save(`./imprimir/imprimir_${fecha}.pdf`)
+    doc.save(`./imprimir/imprimir.pdf`)
 
 }
 /* funcion ejecutada por boton FIN*/

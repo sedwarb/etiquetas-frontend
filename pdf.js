@@ -64,17 +64,22 @@ const generar_pdf = (respuesta)=>{
         }else{
             //const texto = 'LA JOYA CON BICARBONATO X500ML';
             const maxCaracteres = 11;
-            const lineasSeparadas = separarPalabras(tamanio, maxCaracteres);  
+            const lineasSeparadas = separarPalabras(tamanio, maxCaracteres); 
+             for (let i = 0; i < lineasSeparadas.length; i++) {
+                if(i==0)doc.text(posicion, texto1, lineasSeparadas[i])
+                if(i==1)doc.text(posicion, texto2, lineasSeparadas[i]) 
+                if(i==2)doc.text(posicion, texto3, lineasSeparadas[i])  
+             }
 
             /* let n1 = tamanio.slice(0,11), 
                 n2 = tamanio.slice(11,tamanio.length>24?24:tamanio.length) */
-            let n1 = lineasSeparadas[0],
+            /* let n1 = lineasSeparadas[0],
                 n2 = lineasSeparadas[1],
-                n3 = lineasSeparadas[2]
+                n3 = lineasSeparadas[2] */
 
-            doc.text(posicion, texto1, n1)
-            doc.text(posicion, texto2, n2)
-            doc.text(posicion, texto3, n3)                     
+            /* doc.text(posicion, texto1, n1)
+            doc.text(posicion, texto2, n2) */
+            //doc.text(posicion, texto3, n3)                     
         }
         doc.setFontSize(30)
         

@@ -53,7 +53,7 @@ const generar_pdf = (respuesta)=>{
     //const posicion = 22 (2)
     const posicion = 1,
     //texto1 = 17, texto2 = 14, numero = 31 (1)
-    texto1 = 14, texto2 = 20, texto3 = 26, numero = 35
+    texto1 = 7, texto2 = 13, texto3 = 19, numero = 35
     for (let j = 0; j < respuesta.length; j++) {                
         //if(j>0)doc.addPage(opciones)
         
@@ -100,7 +100,7 @@ const generar_pdf = (respuesta)=>{
     //doc.autoPrint({ variant: 'non-conform' })
     let fecha = new Date()
     fecha = `${fecha.getDate()}${fecha.getMonth()+1}${fecha.getFullYear()}_${fecha.getHours()}${fecha.getMinutes()}`
-    doc.save(`./imprimir/imprimir.pdf`)
+    doc.save(`./imprimir/imprimir_${fecha}.pdf`)
 
 }
 /* funcion ejecutada por boton FIN*/

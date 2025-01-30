@@ -84,6 +84,7 @@
                             <th scope="col">Codigo</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Precio</th>
+                            <th scope="col">Eliminar</th>
                         </tr>
                     </thead>
                     <tbody id="tbody_muestra">
@@ -176,10 +177,39 @@
                 <td>${producto.codigo}</td>
                 <td>${producto.nombre}</td>
                 <td>${producto.precio}</td>
+                <td>
+                    <input 
+                        type="button" 
+                        class="btn btn-outline-danger" 
+                        value="-"
+                        onclick="eliminar('${producto.codigo}')">
+                </td>
             `
             tbody_2.appendChild(tr)
         })
     }
     /* Agrega los productos que se van a imprimir --FIN */
+
+    function eliminar(codigo) {
+        productos_add = productos_add.filter(producto => producto.codigo != codigo)
+        while (tbody_2.firstChild){tbody_2.removeChild(tbody_2.firstChild)}
+        productos_add.forEach(producto => {
+            const tr = document.createElement('tr')
+            tr.innerHTML = `
+                <td>${producto.codigo}</td>
+                <td>${producto.nombre}</td>
+                <td>${producto.precio}</td>
+                <td>
+                    <input 
+                        type="button" 
+                        class="btn btn-outline-danger" 
+                        value="-"
+                        onclick="eliminar('${producto.codigo}')">
+                </td>
+            `
+            tbody_2.appendChild(tr)
+        })
+        
+    }
 </script>
 </html>

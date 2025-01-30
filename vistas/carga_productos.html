@@ -129,7 +129,7 @@
         })
     })
 
-    btn_buscar_codigo.addEventListener('click', () => {
+    function buscar_codigo() {
         let busqueda = {tipo:"",valor:""}
         if(input_codigo.value || input_nombre.value){
             while (tbody.firstChild){tbody.removeChild(tbody.firstChild)}
@@ -164,7 +164,16 @@
                     input_nombre.value = ''
                 })
         }
+    }
+
+    btn_buscar_codigo.addEventListener('click', () => {
+        buscar_codigo()
     })
+
+    input_codigo.addEventListener('change', (e) => {
+        buscar_codigo()
+    })
+    
     /* Busqueda por codigo o nombre -- FIN */
 
     /* Agrega los productos que se van a imprimir --INICIO */
@@ -209,7 +218,6 @@
             `
             tbody_2.appendChild(tr)
         })
-        
     }
 </script>
 </html>
